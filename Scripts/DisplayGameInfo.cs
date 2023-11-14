@@ -12,7 +12,7 @@ public class DisplayGameInfo : MonoBehaviour
     public Sprite halfHeart;
 
     // Player game object
-    public GameObject player;
+    public GameObject gameManager;
 
     private void Start()
     {
@@ -31,7 +31,7 @@ public class DisplayGameInfo : MonoBehaviour
         Image[] childrenImages = GetComponentsInChildren<Image>();
 
         // Remaining player lives
-        float remainingPlayerLives = player.GetComponent<PlayerController>().nbLives;
+        float remainingPlayerLives = gameManager.GetComponent<GameManager>().nbLives;
 
         // Remaining player full lives
         double fullLivesRemaining = Math.Truncate(remainingPlayerLives);
@@ -67,7 +67,7 @@ public class DisplayGameInfo : MonoBehaviour
 
         // Setting up the score
         TextMeshProUGUI scoreText = GetComponentInChildren<TextMeshProUGUI>();
-        float playerScore = player.GetComponent<PlayerController>().score;
+        float playerScore = gameManager.GetComponent<GameManager>().score;
         scoreText.text = playerScore.ToString();
 
     }
