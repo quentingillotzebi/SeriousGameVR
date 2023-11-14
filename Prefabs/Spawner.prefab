@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6aa607ea24fec642b45c50879db9095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  period: 2
+  period: 7
   LugagePrefab: {fileID: 9131727776354525087, guid: f2fd6b9bd4007e94dbe8047a84a585fc, type: 3}
