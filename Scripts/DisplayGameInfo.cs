@@ -17,11 +17,13 @@ public class DisplayGameInfo : MonoBehaviour
     private void Start()
     {
         DisplayLivesAndScore();
+        DisplayHoursAndDays();
     }
 
     private void Update()
     {
         DisplayLivesAndScore();
+        DisplayHoursAndDays();
     }
 
     void DisplayLivesAndScore()
@@ -70,5 +72,21 @@ public class DisplayGameInfo : MonoBehaviour
         float playerScore = gameManager.GetComponent<GameManager>().score;
         scoreText.text = playerScore.ToString();
 
+    }
+
+    void DisplayHoursAndDays()
+    {
+        TextMeshProUGUI dayText = GetComponentsInChildren<TextMeshProUGUI>()[1];
+        TextMeshProUGUI hourText = GetComponentsInChildren<TextMeshProUGUI>()[2];
+
+        int dayIndex = gameManager.GetComponent<GameManager>().currentDayIndex;
+        string currentDay = gameManager.GetComponent<GameManager>().Days[dayIndex];
+        
+        dayText.text = currentDay;
+
+        float hourInMinutes = gameManager.GetComponent<GameManager>().currentDayHourInMin;
+        string currentDayHour = $"{(int)TimeSpan.FromMinutes(hourInMinutes).TotalHours:D2}:{TimeSpan.FromMinutes(hourInMinutes).Minutes:D2}";
+
+        hourText.text = currentDayHour;
     }
 }

@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public float period = 1.0f;
+    public float period = 7.0f;
     public GameObject LugagePrefab;
     
-    IEnumerator WaitAndChangeType(float period)
+    IEnumerator WaitAndChangeType()
     {
         while(true) {
             yield return new WaitForSeconds(period);
@@ -16,6 +16,6 @@ public class Spawner : MonoBehaviour
     }
     void Start()
     {
-        StartCoroutine(WaitAndChangeType(period));
+        StartCoroutine(WaitAndChangeType());
     }
 }
