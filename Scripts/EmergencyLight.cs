@@ -37,6 +37,10 @@ public class EmergencyLight : MonoBehaviour
                 }
 
             }
+            else if (lightMaterial.GetColor("_EmissionColor") == Color.red)
+            {
+                lightMaterial.SetColor("_EmissionColor", Color.black);
+            }
         }
     }
 }
