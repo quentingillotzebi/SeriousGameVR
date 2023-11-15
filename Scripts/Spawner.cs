@@ -11,7 +11,8 @@ public class Spawner : MonoBehaviour
     {
         while(true) {
             yield return new WaitForSeconds(period);
-            Instantiate(LugagePrefab, transform.position, transform.rotation *  Quaternion.Euler(0, 90, 90));
+            GameObject LugageInstance = Instantiate(LugagePrefab, transform.position, transform.rotation *  Quaternion.Euler(0, 90, 90));
+            LugageInstance.gameObject.tag = "Lugage";
         }
     }
     void Start()
