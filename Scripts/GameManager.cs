@@ -7,7 +7,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.UI;
 using Random = System.Random;
+using TMPro;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -60,6 +63,26 @@ public class GameManager : MonoBehaviour
 
     public GameObject blackScreenCanvas;
 
+	public TextMeshProUGUI rushModeText;
+
+	public Light alarme;
+
+	public Light classicLight;
+
+	private String rushMode = "RUSH MODE";
+
+	IEnumerator RushModeBlinking() {
+		classicLight.enabled = false;
+		while (true) {
+			yield return new WaitForSeconds(0.5f);
+			rushModeText.text = "";
+			alarme.enabled = false;
+			yield return new WaitForSeconds(0.5f);
+			rushModeText.text = rushMode;
+			alarme.enabled = true;
+		}
+	}
+
 
     IEnumerator ChangeHourEverySecond()
     {
@@ -68,18 +91,31 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1.0f);
 
             // Every second in IRL is x minutes in game. This way, one day is always 5 minutes in game.
+
             // currentDayHourInMin += (dayEndHourInMin - dayStartHourInMin) / (60 * dayDurationInIRLMin);
             currentDayHourInMin += 15.0f;
+
+
+            currentDayHourInMin += (dayEndHourInMin - dayStartHourInMin) / (60 * dayDurationInIRLMin);
+			currentDayHourInMin += 15;
 
             if (currentDayHourInMin >= rushPeriodStartHourInMin && !isRushPeriod)
             {
                 isRushPeriod = true;
+				rushModeText.text = rushMode;
+				classicLight.enabled = false;
+				alarme.enabled = true;
+				startBlinking();
                 Spawner.GetComponent<Spawner>().period = spawnerPeriod / 2;
             }
 
             if (currentDayHourInMin >= rushPeriodEndHourInMin && isRushPeriod)
             {
+				StopCoroutine("RushModeBlinking");
+				alarme.enabled = false;
+				//classicLight.enabled = true;
                 isRushPeriod = false;
+				rushModeText.text = "";
                 Spawner.GetComponent<Spawner>().period = spawnerPeriod;
             }
 
@@ -90,8 +126,13 @@ public class GameManager : MonoBehaviour
                 {
 
                     // Change the day and reset start hour
+
+					classicLight.enabled = true;
+					isRushPeriod = false;
                     currentDayIndex++;
                     currentDayHourInMin = dayStartHourInMin;
+					rushModeText.text = "";
+					StopCoroutine("RushModeBlinking");
 
                     // Bonus score at the end of the day + earn a new lives
                     score += nbLives * 100;
@@ -152,10 +193,16 @@ public class GameManager : MonoBehaviour
         rushPeriodEndHourInMin = rushPeriodStartHourInMin + (dayEndHourInMin - dayStartHourInMin) / dayDurationInIRLMin;
     }
 
+	void startBlinking() {
+		StopCoroutine("RushModeBlinking");
+		StartCoroutine("RushModeBlinking");		
+	} 
+
     private void Start()
     {
         StartCoroutine(PauseGameAndDisplayScreen(true));
         spawnerPeriod = Spawner.GetComponent<Spawner>().period;
+		rushModeText.text = "";
         currentDayHourInMin = dayStartHourInMin;
         RandomRushPeriod();
         StartCoroutine(ChangeHourEverySecond());
