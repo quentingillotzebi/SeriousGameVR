@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class Xray : MonoBehaviour
 {
@@ -18,12 +20,19 @@ public class Xray : MonoBehaviour
         
     }
 
-    void OnTriggerEnter(Collider other) 
+    void OnTriggerEnter(Collider v) 
     {
-        if (other.gameObject.CompareTag("Lugage")) 
+        if (v.gameObject.CompareTag("Lugage")) 
         {
             //other.gameObject.SetActive(false);
             screenCanvas.gameObject.SetActive(true);
+            Image[] childrenImages = screenCanvas.GetComponentsInChildren<Image>();
+            for (int i = 0; i < 5; i++)
+            {
+                Debug.Log(v.GetComponent<LuggageController>().objetsValise.Length);
+                Sprite s = v.GetComponent<LuggageController>().objetsValise[i];
+                childrenImages[i+1].sprite = s;
+            }
         }
     }
 }

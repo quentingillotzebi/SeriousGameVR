@@ -93,11 +93,8 @@ public class GameManager : MonoBehaviour
             // Every second in IRL is x minutes in game. This way, one day is always 5 minutes in game.
 
             // currentDayHourInMin += (dayEndHourInMin - dayStartHourInMin) / (60 * dayDurationInIRLMin);
-            currentDayHourInMin += 15.0f;
-
 
             currentDayHourInMin += (dayEndHourInMin - dayStartHourInMin) / (60 * dayDurationInIRLMin);
-			currentDayHourInMin += 15;
 
             if (currentDayHourInMin >= rushPeriodStartHourInMin && !isRushPeriod)
             {
