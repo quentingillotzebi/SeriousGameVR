@@ -180,7 +180,7 @@ public class GameManager : MonoBehaviour
 
         if (startOfGame)
         {
-            blackScreenCanvas.GetComponentInChildren<TextMeshProUGUI>().text = $"Dwane S. Imulator";
+            blackScreenCanvas.GetComponentInChildren<TextMeshProUGUI>().text = $"Luggage Madness";
         }
         else if (endOfGame)
         {
@@ -194,7 +194,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            blackScreenCanvas.GetComponentInChildren<TextMeshProUGUI>().text = $"Next day : \n {Days[currentDayIndex]}\n\nThe lugages will spawn faster than yesterday.";
+            blackScreenCanvas.GetComponentInChildren<TextMeshProUGUI>().text = $"Next day : \n {Days[currentDayIndex]}\n\nThe luggages will spawn faster than yesterday.";
         }
 
         while (Time.realtimeSinceStartup < pauseEndTime)
