@@ -34,7 +34,6 @@ public class Xray : MonoBehaviour
             Image[] childrenImages = screenCanvas.GetComponentsInChildren<Image>();
             for (int i = 0; i < 5; i++)
             {
-                Debug.Log(v.GetComponent<LuggageController>().objetsValise.Length);
                 Sprite s = v.GetComponent<LuggageController>().objetsValise[i];
                 childrenImages[i+1].sprite = s;
 				Random rand = new Random();

@@ -63,25 +63,27 @@ public class GameManager : MonoBehaviour
 
     public GameObject blackScreenCanvas;
 
-	public TextMeshProUGUI rushModeText;
+    public TextMeshProUGUI rushModeText;
 
-	public Light alarme;
+    public Light alarme;
 
-	public Light classicLight;
+    public Light classicLight;
 
-	private String rushMode = "RUSH MODE";
+    private String rushMode = "RUSH MODE";
 
-	IEnumerator RushModeBlinking() {
-		classicLight.enabled = false;
-		while (true) {
-			yield return new WaitForSeconds(0.5f);
-			rushModeText.text = "";
-			alarme.enabled = false;
-			yield return new WaitForSeconds(0.5f);
-			rushModeText.text = rushMode;
-			alarme.enabled = true;
-		}
-	}
+    IEnumerator RushModeBlinking()
+    {
+        classicLight.enabled = false;
+        while (true)
+        {
+            yield return new WaitForSeconds(0.5f);
+            rushModeText.text = "";
+            alarme.enabled = false;
+            yield return new WaitForSeconds(0.5f);
+            rushModeText.text = rushMode;
+            alarme.enabled = true;
+        }
+    }
 
 
     IEnumerator ChangeHourEverySecond()
@@ -104,20 +106,20 @@ public class GameManager : MonoBehaviour
                 if (currentDayHourInMin >= rushPeriodStartHourInMin && !isRushPeriod)
                 {
                     isRushPeriod = true;
-				    rushModeText.text = rushMode;
-				    classicLight.enabled = false;
-				    alarme.enabled = true;
-				    startBlinking();
+                    rushModeText.text = rushMode;
+                    classicLight.enabled = false;
+                    alarme.enabled = true;
+                    startBlinking();
                     Spawner.GetComponent<Spawner>().period = spawnerPeriod / 2;
                 }
 
                 if (currentDayHourInMin >= rushPeriodEndHourInMin && isRushPeriod)
                 {
-				    StopCoroutine("RushModeBlinking");
-				    alarme.enabled = false;
-				    //classicLight.enabled = true;
+                    StopCoroutine("RushModeBlinking");
+                    alarme.enabled = false;
+                    //classicLight.enabled = true;
                     isRushPeriod = false;
-				    rushModeText.text = "";
+                    rushModeText.text = "";
                     Spawner.GetComponent<Spawner>().period = spawnerPeriod;
                 }
 
@@ -129,12 +131,12 @@ public class GameManager : MonoBehaviour
 
                         // Change the day and reset start hour
 
-					    classicLight.enabled = true;
-					    isRushPeriod = false;
+                        classicLight.enabled = true;
+                        isRushPeriod = false;
                         currentDayIndex++;
                         currentDayHourInMin = dayStartHourInMin;
-					    rushModeText.text = "";
-					    StopCoroutine("RushModeBlinking");
+                        rushModeText.text = "";
+                        StopCoroutine("RushModeBlinking");
 
                         // Bonus score at the end of the day + earn a new lives
                         score += nbLives * 100;
@@ -183,7 +185,7 @@ public class GameManager : MonoBehaviour
         else if (endOfGame)
         {
             string hiredText = "Well done, you're hired !";
-            
+
             if (nbLives <= 0)
             {
                 hiredText = "Not this time, keep training ...";
@@ -220,18 +222,40 @@ public class GameManager : MonoBehaviour
         rushPeriodEndHourInMin = rushPeriodStartHourInMin + (dayEndHourInMin - dayStartHourInMin) / dayDurationInIRLMin;
     }
 
-	void startBlinking() {
-		StopCoroutine("RushModeBlinking");
-		StartCoroutine("RushModeBlinking");		
-	} 
+    void startBlinking()
+    {
+        StopCoroutine("RushModeBlinking");
+        StartCoroutine("RushModeBlinking");
+    }
 
     private void Start()
     {
         StartCoroutine(PauseGameAndDisplayScreen(true, false));
         spawnerPeriod = Spawner.GetComponent<Spawner>().period;
-		rushModeText.text = "";
+        rushModeText.text = "";
         currentDayHourInMin = dayStartHourInMin;
         RandomRushPeriod();
         StartCoroutine(ChangeHourEverySecond());
+    }
+
+    public void AddScore(float pointsToAdd)
+    {
+        score += pointsToAdd;
+    }
+
+    // Fonction pour réduire la vie du joueur
+    public void ReduceLife(double lifeToReduce)
+    {
+        nbLives -= (float)lifeToReduce;
+
+/*         if (nbLives <= 0)
+        {
+            GameOver();
+        } */
+    }
+
+    private void GameOver()
+    {
+        //Fin du jeu
     }
 }
