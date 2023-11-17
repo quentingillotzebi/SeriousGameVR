@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Random = System.Random;
 
 
 
@@ -36,6 +37,9 @@ public class Xray : MonoBehaviour
                 Debug.Log(v.GetComponent<LuggageController>().objetsValise.Length);
                 Sprite s = v.GetComponent<LuggageController>().objetsValise[i];
                 childrenImages[i+1].sprite = s;
+				Random rand = new Random();
+				int angleRotate = rand.Next(0,270);
+				childrenImages[i+1].transform.Rotate(Vector3.forward * angleRotate);
             }
 			screenPoidsCanvas.gameObject.SetActive(true);
 			TextMeshProUGUI textPoids = screenPoidsCanvas.GetComponentsInChildren<TextMeshProUGUI>()[0];

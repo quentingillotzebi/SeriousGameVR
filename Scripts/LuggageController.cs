@@ -45,16 +45,17 @@ public class LuggageController : MonoBehaviour
            if (randomPoidsOuContenu <= 0.4)
            {
                double randomAnalyseOuDanger = random.NextDouble();
+			   int index = random.Next(0, objetsValise.Length);
                if (randomAnalyseOuDanger <= 0.5)
-               {
-                   objetsValise[0] = objetsAnalyzable[random.Next(0, objetsAnalyzable.Length)];
+               {				   
+                   objetsValise[index] = objetsAnalyzable[random.Next(0, objetsAnalyzable.Length)];
                    type = LuggageType.ANALYZABLE;
                }
                else
                {
                    // Valise à analyser en contenu
                    // Set Tag UNAUTHORIZED
-                   objetsValise[0] = objetsUnauthorized[random.Next(0, objetsUnauthorized.Length)];
+                   objetsValise[index] = objetsUnauthorized[random.Next(0, objetsUnauthorized.Length)];
                    type = LuggageType.UNAUTHORIZED;
                }
            }
