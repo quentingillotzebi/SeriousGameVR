@@ -2,16 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+
 
 
 public class Xray : MonoBehaviour
 {
 
     public GameObject screenCanvas;
+	public GameObject screenPoidsCanvas;
     // Start is called before the first frame update
     void Start()
     {
         screenCanvas.gameObject.SetActive(false);
+		screenPoidsCanvas.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -33,6 +37,10 @@ public class Xray : MonoBehaviour
                 Sprite s = v.GetComponent<LuggageController>().objetsValise[i];
                 childrenImages[i+1].sprite = s;
             }
+			screenPoidsCanvas.gameObject.SetActive(true);
+			TextMeshProUGUI textPoids = screenPoidsCanvas.GetComponentsInChildren<TextMeshProUGUI>()[0];
+			textPoids.text = v.GetComponent<LuggageController>().poids.ToString("0.00") + " kgs";
+			
         }
     }
 }
