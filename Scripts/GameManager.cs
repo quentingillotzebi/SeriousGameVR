@@ -248,14 +248,6 @@ public class GameManager : MonoBehaviour
     {
         nbLives -= (float)lifeToReduce;
 
-/*         if (nbLives <= 0)
-        {
-            GameOver();
-        } */
     }
 
-    private void GameOver()
-    {
-        //Fin du jeu
-    }
 }
